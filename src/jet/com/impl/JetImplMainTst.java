@@ -38,7 +38,7 @@ public class JetImplMainTst {
 			JSONObject flags = new JSONObject();
 			
 			try {
-				json.put("params", new String[] {"test"});
+				json.put("params", new String[] {"homepage"});
 				flags.put("n", "my name");
 				flags.put("flag2", "long flag");
 				json.put("flags", flags);

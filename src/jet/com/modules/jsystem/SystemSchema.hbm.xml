@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="jet.com.modules.jsystem">
 
-    <class name="SystemSchema" table="SYSTEMSCHEMA">
+    <class name="SystemSchema" table="SYSTEM">
     	<id name="id">
                         <generator class="native"/>
                 </id>
