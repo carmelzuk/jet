@@ -7,6 +7,7 @@ import jet.com.database.Database;
 import jet.com.modules.HookResult;
 import jet.com.modules.Modules;
 import jet.com.modules.command.Command;
+import jet.com.modules.jsystem.JCache;
 import jet.com.modules.jsystem.JSystem;
 import jet.com.modules.jsystem.SystemSchema;
 import jet.com.modules.menu.Menu;
@@ -25,9 +26,12 @@ public class Jet {
 	public static final String HOOK_ENABLE = "enable";
 	public static final int ENABLE_HOOK_ID = 1;
 	
+	public static final String SYSTEM_MODULE_NAME = "system";
+	
 	
 	public Database databaseApi;
 	public Modules modulesApi;
+	public JSystem systemModule;
 	public Menu menuModule;
 	public Command commadApi;
 	public ThemeModule themeApi;
@@ -42,8 +46,10 @@ public class Jet {
 		jet.com.themes.Theme.jet = this;
 		
 		databaseApi = new Database();
+		
 		modulesApi = new Modules(this);
 		menuModule = (Menu) modulesApi.getModule("menu");
+		systemModule = (JSystem) modulesApi.getModule(SYSTEM_MODULE_NAME);
 		commadApi = (Command) modulesApi.getModule("command");
 		themeApi = (ThemeModule)modulesApi.getModule(ThemeModule.NAME);
 		modulesApi.addHook(HOOK_ENABLE);
@@ -56,10 +62,7 @@ public class Jet {
 	
 	
 	public void run() {
-//		if (!jetConfig.isInstalled()){
-//			JetInstaller installer = new JetInstaller(this);
-//			installer.install(jetConfig);
-//		}
+		
 		bootstrap();
 		postBootstrap();
 	}
@@ -68,22 +71,29 @@ public class Jet {
 //		return false;
 //	}
 	
+	
 	/**
 	 * TODO Load modules form system table and enable / disable them.
 	 */
 	public void bootstrap() {
 
+		
 		databaseApi.setHbnXml(new File(System.getProperty("user.dir") + "/config/hibernate.cfg.xml"));
 		databaseApi.connect();
 		
+		// enable to system
+		modulesApi.enableSystemModule();
+		
+		
 		String[] coreModules = getCoreModules();
 		for(int i = 0 ; i < coreModules.length ; i++) {
-			modulesApi.enableModule(coreModules[i]);
+			if(coreModules[i].compareTo(SYSTEM_MODULE_NAME) != 0)
+				modulesApi.enableModule(coreModules[i]);
 		}
 		
 		// run enable Module procedure on all enabled modules that are 
 		// registered in SystemSchema table.
-		JSystem systemModule = (JSystem) modulesApi.getModule("system");
+		JSystem systemModule = (JSystem) modulesApi.getModule(SYSTEM_MODULE_NAME);
 		List<SystemSchema> systemSchema = systemModule.selectSystemSchema();
 		for(SystemSchema row : systemSchema) {
 			
@@ -126,7 +136,7 @@ public class Jet {
 	
 	private String[] getCoreModules() {
 		return new String[]{
-				"system",
+				SYSTEM_MODULE_NAME,
 				"menu",
 				"command",
 				"theme",
@@ -144,7 +154,8 @@ public class Jet {
 
 		String[] coreModules = getCoreModules();
 		for(int i = 0 ; i < coreModules.length ; i++) {
-			modulesApi.enableModule(coreModules[i]);
+			if(coreModules[i].compareTo(SYSTEM_MODULE_NAME) != 0)
+				modulesApi.enableModule(coreModules[i]);
 		}
 //		modulesApi.enableModule("system");
 //		modulesApi.enableModule("menu");

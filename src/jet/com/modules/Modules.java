@@ -2,6 +2,7 @@ package jet.com.modules;
 
 import java.util.ArrayList;
 
+import org.hibernate.DuplicateMappingException;
 import org.springframework.context.ApplicationContext;
 
 import jet.com.Jet;
@@ -54,6 +55,41 @@ public class Modules {
 	
 	public void enableModule(String name) {
 		Module m = getModule(name);
+		m.init();
+		
+		ArrayList<String> schema = m.schemaResource();
+		if(schema != null) {
+			for(String resource : schema) {
+				jet.databaseApi.getConfiguration().addResource(resource);
+			}
+		}
+		jet.databaseApi.reBuildFactory();
+		
+		// If menu module is enabled.
+		if(menuModule.isStatus()) {
+			HookResult hookRes = invoke(Menu.HOOK_MENU, null);
+			for(Object menuItems : hookRes.getResults()) {
+				for(MenuItem menuItem : (ArrayList<MenuItem>)menuItems){
+					menuModule.menuItemUpdate(menuItem);
+				}
+			}
+		}
+		
+		
+		ArrayList<Object> params = new ArrayList<>();
+		params.add(m);
+		m.setStatus(true);
+		invoke(Jet.HOOK_ENABLE, params);
+	}
+	
+	/**
+	 * Special function for enabling system module.
+	 * 
+	 * {@link JSystem} module is unique because it is being enable first. It's database
+	 * tables are used for bootstrap.
+	 */
+	public void enableSystemModule() {
+		Module m = getModule("system");
 		m.init();
 		
 		ArrayList<String> schema = m.schemaResource();

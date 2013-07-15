@@ -12,5 +12,11 @@
         <property name="type"/>
         <property name="status"/>
     </class>
+	<class name="JCache" table="cache">
+    	<id name="cid"
+    		type="java.lang.String">
+        </id>
+        <property name="data"/>
+	</class>
 
 </hibernate-mapping>

@@ -22,8 +22,6 @@ import jet.com.themes.Theme;
 
 public class JSystem extends Module{
 
-
-
 	protected HashMap<String, HookImplementor> hookList = new HashMap<>();
 	
 	public JSystem(){
@@ -83,7 +81,6 @@ public class JSystem extends Module{
 	public void registerModule(Module module) {
 		SystemSchema systemSchema;
 		Session session = jet.databaseApi.getSessionFactory().getCurrentSession();
-//		try{
 
 		session.beginTransaction();
 		Query q = session.createQuery("FROM SystemSchema WHERE name = :name");
@@ -188,6 +185,22 @@ public class JSystem extends Module{
 	public Object runMenuItemCallback(String path, ArrayList<Object> params) {
 		return "dldlfl";
 	}
+	
+	public JCache getCache(String cid) {
+		JCache cache = null;
+		Session session = jet.databaseApi.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("FROM JCache WHERE cid = :cid");
+		q.setParameter("cid", cid);
+		List<JCache> list = q.list();
+		if(list.size() != 0) {
+			cache = list.get(0);
+		}
+		session.getTransaction().commit();
+		
+		return cache;
+	}
+	
 
 
 	
