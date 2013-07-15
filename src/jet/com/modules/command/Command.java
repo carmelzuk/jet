@@ -1,5 +1,7 @@
 package jet.com.modules.command;
 
+import gnu.getopt.GetoptDemo;
+
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -30,6 +32,19 @@ public class Command extends Module {
 
 	@Override
 	public void restore() {
+		
+	}
+	
+	/**
+	 * [test, -n, --flag=flag2]
+	 * @param args
+	 * @return
+	 */
+	public JSONObject cmd2Json(String [] args) {
+		jet.modulesApi.invoke("optstring", null);
+		GetoptDemo g = new GetoptDemo();
+		
+		return null;
 		
 	}
 	

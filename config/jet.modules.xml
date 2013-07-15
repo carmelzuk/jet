@@ -4,11 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+  <!-- Core modules-->
   <bean id="system"
         class="jet.com.modules.jsystem.JSystem">
-  </bean>
-  <bean id="testModule"
-        class="jet.com.impl.modules.TestModule">
   </bean>
   <bean id="menu"
   		class="jet.com.modules.menu.Menu">
@@ -20,6 +19,11 @@
   
   <bean id="theme"
   		class="jet.com.modules.theme.ThemeModule">
+  </bean>
+  
+  <!-- Custom modules-->
+  <bean id="testModule"
+        class="jet.com.impl.modules.TestModule">
   </bean>
   
 

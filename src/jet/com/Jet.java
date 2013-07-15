@@ -54,6 +54,7 @@ public class Jet {
 		
 	}
 	
+	
 	public void run() {
 //		if (!jetConfig.isInstalled()){
 //			JetInstaller installer = new JetInstaller(this);

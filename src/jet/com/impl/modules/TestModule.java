@@ -28,6 +28,7 @@ public class TestModule extends Module {
 		addHookImplement("theme", new ThemeHook(), name);
 		addHookImplement(jet.themeApi.buildThemeHookName("testpage"), testPage, name);
 		addHookImplement(jet.themeApi.buildPreProcessHookName("testpage"), testPage, name);
+//		addHookImplement("optstring", implementor)
 	}
 
 	@Override

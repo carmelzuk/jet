@@ -45,6 +45,7 @@ public class JetImplMainTst {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			jet.commadApi.cmd2Json(args);
 			JetResponse res = jet.commadApi.handleRequest(new JetRequest(json));
 			System.out.println(res.getResult());
 			
