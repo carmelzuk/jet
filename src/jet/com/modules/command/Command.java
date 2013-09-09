@@ -1,13 +1,18 @@
 package jet.com.modules.command;
 
+import gnu.getopt.Getopt;
 import gnu.getopt.GetoptDemo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import jet.com.Module;
+import jet.com.modules.HookResult;
 
 public class Command extends Module {
 
@@ -41,11 +46,53 @@ public class Command extends Module {
 	 * @return
 	 */
 	public JSONObject cmd2Json(String [] args) {
-		jet.modulesApi.invoke("optstring", null);
-		GetoptDemo g = new GetoptDemo();
+
+		JSONObject flags = new JSONObject();
+		HookResult res = jet.modulesApi.invoke("optstring", null);
+		System.out.println(getOptString(res));
+		
+		Getopt g = new Getopt("test", args, getOptString(res));
+		
+		int c;
+
+		try {
+		while ((c = g.getopt()) != -1)
+		{
+
+			String cc = Character.toString((char)c);
+			String argg = g.getOptarg();
+			argg = argg == null ? "" : argg;
+//			flags.put("t", "");
+			flags.put(cc, argg);
+			switch (c)
+			{
+				
+			}
+			
+		}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		GetoptDemo gd = new GetoptDemo();
 		
 		return null;
 		
+	}
+	
+	private String getOptString(HookResult results) {
+		String result = "";
+		for (Object res: results.getResults()) {
+			String[] ress = (String[]) res;
+			for(int i = 0; i < ress.length ; i++) {
+				result += ress[i];
+			}
+			
+		}
+		
+		return result;
 	}
 	
 	/**

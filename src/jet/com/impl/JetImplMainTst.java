@@ -32,13 +32,14 @@ public class JetImplMainTst {
 			config.setHbn_config_file(userDir + "/config/hibernate.cfg.xml");
 			Jet jet = new Jet(config);
 			jet.run();
+//			jet.themeApi.disableTheme("htmlTheme");
 //			jet.themeApi.enableTheme("htmlTheme");
 //			jet.modulesApi.enableModule("testModule");
 			JSONObject json = new JSONObject();
 			JSONObject flags = new JSONObject();
 			
 			try {
-				json.put("params", new String[] {"homepage"});
+				json.put("params", new String[] {"test"});
 				flags.put("n", "my name");
 				flags.put("flag2", "long flag");
 				json.put("flags", flags);

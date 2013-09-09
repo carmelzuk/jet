@@ -8,8 +8,10 @@ import org.json.JSONObject;
 import jet.com.Jet;
 import jet.com.Module;
 import jet.com.impl.modules.test.hooks.MenuHook;
+import jet.com.impl.modules.test.hooks.OptstringHook;
 import jet.com.impl.modules.test.hooks.ThemeHook;
 import jet.com.impl.modules.test.hooks.ThemeTestPage;
+import jet.com.modules.command.abs.AbsOptstringHook;
 import jet.com.modules.menu.Menu;
 
 public class TestModule extends Module {
@@ -28,7 +30,8 @@ public class TestModule extends Module {
 		addHookImplement("theme", new ThemeHook(), name);
 		addHookImplement(jet.themeApi.buildThemeHookName("testpage"), testPage, name);
 		addHookImplement(jet.themeApi.buildPreProcessHookName("testpage"), testPage, name);
-//		addHookImplement("optstring", implementor)
+		
+		addHookImplement("optstring", new OptstringHook(), name);
 	}
 
 	@Override

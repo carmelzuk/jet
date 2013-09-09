@@ -6,7 +6,10 @@ public class OptstringHook extends AbsOptstringHook {
 
 	@Override
 	public String[] optstrings() {
-		return null;
+		String[] opts = new String[]{
+				"t"
+		};
+		return opts;
 	}
 
 }
